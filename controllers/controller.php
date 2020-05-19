@@ -7,7 +7,7 @@ switch ($action) {
   case 'register':
     // code...
     break;
-
+    //Logout
   case 'logout':
     if (isset($_SESSION['userId'])) {
       unset($_SESSION['userId']);
@@ -16,6 +16,7 @@ switch ($action) {
 
     break;
 
+    ///////////////LOGIN//////////
   case 'login':
 
     include "../models/UserManager.php";
@@ -33,19 +34,27 @@ switch ($action) {
     }
     break;
 
+    ///////////////Write a new post/////////
   case 'newMsg':
-    // code...
+    include "../models/PostManager.php";
+    if (isset($_SESSION['userId']) && isset($_POST['msg'])) {
+      CreateNewPost($_SESSION['userId'], $_POST['msg']);
+    }
+    header('Location: ?action=display');
     break;
 
+    //Write a new comment///////////////////
   case 'newComment':
     // code...
     break;
 
+    //////////////Default display/////////////
   case 'display':
   default:
     include "../models/PostManager.php";
     $posts = GetAllPosts();
 
+    ////// Search //////////
     if (isset($_GET["search"])) {
       $posts = SearchInPosts($_GET["search"]);
     } else {

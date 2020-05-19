@@ -1,13 +1,20 @@
 <?php
 include_once "PDO.php";
 
+//Get a comment from its ID
 function GetOneCommentFromId($id)
 {
   global $PDO;
-  $response = $PDO->query("SELECT * FROM comment WHERE id = $id");
+  $response = $PDO->prepare("SELECT * FROM comment WHERE id = :id ");
+  $response->execute(
+    array(
+      "id" => $id
+    )
+  );
   return $response->fetch();
 }
 
+//Get ALL the comemnts
 function GetAllComments()
 {
   global $PDO;
@@ -15,6 +22,7 @@ function GetAllComments()
   return $response->fetchAll();
 }
 
+//Get the comments by the user ID
 function GetAllCommentsFromUserId($userId)
 {
   global $PDO;
@@ -27,6 +35,7 @@ function GetAllCommentsFromUserId($userId)
   return $response->fetchAll();
 }
 
+//Get the comment by the post Id
 function GetAllCommentsFromPostId($postId)
 {
   global $PDO;

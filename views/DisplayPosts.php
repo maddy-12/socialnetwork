@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <!-- ************************NAVBAR*********************** -->
   <header class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="?">
       <img src="img/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -28,19 +29,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
       </ul>
+      <!-- ******************SEARCH FORM************************ -->
       <ul class="navbar-nav">
         <li class="nav-item">
           <form class="nav-link" method="get">
             <input name="search" type="text"></input>
           </form>
         </li>
+        <!-- ******************LOGIN & LOGOUT************************ -->
         <?php
+        // If the user is logged in -> hide "login" and"sign up" = show "logout"
         if (isset($_SESSION['userId'])) {
         ?>
           <li class="nav-item">
             <a class="nav-link" href="?action=logout" role="button">Logout</a>
           </li>
         <?php
+          //If not logged in -> show the login & suign up buttons
         } else {
         ?>
           <li class="nav-item">
@@ -56,7 +61,9 @@
     </div>
 
   </header>
+  <!-- ***********END OF NAVBAR*********** -->
 
+  <!-- *********TITLE AND QUOTE***************** -->
   <div class="container">
     <div class="row">
       <div class="col">
@@ -68,9 +75,29 @@
         </blockquote>
       </div>
     </div>
+
+    <!-- ***************************START OF THE POSTS SECTION*************************** -->
     <div class="row">
       <div class="col">
+
         <?php
+        //********************************Input to write a post************************ 
+        //If user is logged in -> Show Input Form
+        if (isset($_SESSION['userId'])) {
+        ?>
+          <div class="row newMsg">
+            <div class="col">
+              <form class="input-group" method="POST" action="?action=newMsg">
+                <input name="msg" class="form-control" placeholder="Add a message" type="text">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        <?php
+        }
+        ?>
+        <?php
+        // **********************Show posts**************************
         if (isset($posts)) {
           foreach ($posts as $onePost) {
         ?>
@@ -89,6 +116,7 @@
               <div class="post-description">
                 <p><?= htmlspecialchars($onePost['content']); ?></p>
               </div>
+              <!-- *****************SHOW COMMENTS*************************** -->
               <div class="post-footer">
                 <ul class="comments-list">
                   <?php
