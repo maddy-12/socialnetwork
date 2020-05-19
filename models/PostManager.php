@@ -19,9 +19,19 @@ function GetAllPosts()
   return $response->fetchAll();
 }
 
+//Retrieve Posts by user ID
 function GetAllPostsFromUserId($userId)
 {
   global $PDO;
   $response = $PDO->query("SELECT * FROM post WHERE user_id = $userId ORDER BY created_at DESC");
+  return $response->fetchAll();
+}
+//Search methode
+function  SearchInPosts($search)
+{
+  global $PDO;
+  $response = $PDO->query(
+    "SELECT post.*, user.nickname FROM post LEFT JOIN user on (post.user_id = user.id) WHERE post.content LIKE '%$search%'"
+  );
   return $response->fetchAll();
 }
