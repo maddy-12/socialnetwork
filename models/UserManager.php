@@ -26,13 +26,19 @@ function GetUserIdFromUserAndPassword($username, $password)
   if (!empty($username) && !empty($password)) {
 
     //Request to get the user ID and the PWD
-    $response = $PDO->prepare("SELECT * FROM user WHERE nickname = :username and password = :password");
+    $response = $PDO->prepare("SELECT id FROM user WHERE nickname = :username and password = MD5(:password) ");
     $response->execute(
       array(
         "username" => $username,
         "password" => $password
       )
     );
+    if ($response->rowCount() == 1) {
+      $row = $response->fetch();
+      return $row['id'];
+    } else {
+      return -1;
+    }
   }
 
   $users = $response->fetchAll();
@@ -43,4 +49,30 @@ function GetUserIdFromUserAndPassword($username, $password)
   } else {
     return -1;
   }
+}
+
+//
+function IsNicknameFree($nickname)
+{
+  global $PDO;
+  $response = $PDO->prepare("SELECT * FROM user WHERE nickname = :nickname ");
+  $response->execute(
+    array(
+      "nickname" => $nickname
+    )
+  );
+  return $response->rowCount() == 0;
+}
+
+function CreateNewUser($nickname, $password)
+{
+  global $PDO;
+  $response = $PDO->prepare("INSERT INTO user (nickname, password) values (:nickname , MD5(:password) )");
+  $response->execute(
+    array(
+      "nickname" => $nickname,
+      "password" => $password
+    )
+  );
+  return $PDO->lastInsertId();
 }
