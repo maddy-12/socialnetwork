@@ -26,11 +26,16 @@ function GetAllComments()
 function GetAllCommentsFromUserId($userId)
 {
   global $PDO;
-  $response = $PDO->query(
+  $response = $PDO->prepare(
     "SELECT comment.*, user.nickname "
       . "FROM comment LEFT JOIN user on (comment.user_id = user.id) "
-      . "WHERE comment.user_id = $userId "
-      . "ORDER BY comment.created_at ASC"
+      . "WHERE comment.user_id = :userId "
+      . "ORDER BY comment.created_at DESC"
+  );
+  $response->execute(
+    array(
+      "userId" => $userId
+    )
   );
   return $response->fetchAll();
 }
@@ -40,11 +45,16 @@ function GetAllCommentsFromPostId($postId)
 {
   global $PDO;
 
-  $response = $PDO->query(
+  $response = $PDO->prepare(
     "SELECT comment.*, user.nickname "
       . "FROM comment LEFT JOIN user on (comment.user_id = user.id) "
-      . "WHERE comment.post_id = $postId "
-
+      . "WHERE comment.post_id = :postId "
+      . "ORDER BY comment.created_at DESC"
+  );
+  $response->execute(
+    array(
+      "postId" => $postId
+    )
   );
 
   return $response->fetchAll();

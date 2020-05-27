@@ -28,8 +28,14 @@ function GetAllPosts()
 //Retrieve Posts by user ID
 function GetAllPostsFromUserId($userId)
 {
+
   global $PDO;
-  $response = $PDO->query("SELECT * FROM post WHERE user_id = $userId ORDER BY created_at DESC");
+  $response = $PDO->prepare("SELECT * FROM post WHERE user_id = :id ORDER BY created_at DESC");
+  $response->execute(
+    array(
+      "id" => $userId
+    )
+  );
   return $response->fetchAll();
 }
 //Search methode
