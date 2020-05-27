@@ -91,7 +91,7 @@ switch ($action) {
       CreateNewComment($_SESSION['userId'], $_POST['postId'], $_POST['comment']);
     }
     header('Location: ?action=display');
-    break;
+
     break;
 
     //////////////Default display/////////////
