@@ -49,7 +49,7 @@ function GetAllCommentsFromPostId($postId)
     "SELECT comment.*, user.nickname "
       . "FROM comment LEFT JOIN user on (comment.user_id = user.id) "
       . "WHERE comment.post_id = :postId "
-      . "ORDER BY comment.created_at DESC"
+      . "ORDER BY comment.created_at ASC"
   );
   $response->execute(
     array(
