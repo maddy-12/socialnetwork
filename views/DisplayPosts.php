@@ -85,6 +85,7 @@
         //If user is logged in -> Show Input Form
         if (isset($_SESSION['userId'])) {
         ?>
+
           <div class="row newMsg">
             <div class="col">
               <form class="input-group" method="POST" action="?action=newMsg">
@@ -92,7 +93,9 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>
+
           </div>
+
         <?php
         }
         ?>
@@ -116,6 +119,7 @@
               <div class="post-description">
                 <p><?= htmlspecialchars($onePost['content']); ?></p>
               </div>
+
               <!-- *****************SHOW COMMENTS*************************** -->
               <div class="post-footer">
                 <ul class="comments-list">
@@ -136,12 +140,30 @@
                           <p><?= htmlspecialchars($comment['content']); ?></p>
                         </div>
                       </li>
+
                   <?php
                     }
                   }
                   ?>
                 </ul>
               </div>
+
+              <!-- ADD NEW COMMENT -->
+              <?php
+              if (isset($_SESSION['userId'])) {
+              ?>
+                <div class="input-group">
+                  <form class="input-group" method="POST" action="?action=newComment">
+                    <input name="postId" type="hidden" value="<?= $onePost['id'] ?>">
+                    <input name="comment" class="form-control" placeholder="Add a comment" type="text">
+                    <span class="input-group-text">
+                      <a href="#" onclick="$(this).closest('form').submit()"><i class="fa fa-edit"></i></a>
+                    </span>
+                  </form>
+                </div>
+              <?php
+              }
+              ?>
             </div>
         <?php
           }

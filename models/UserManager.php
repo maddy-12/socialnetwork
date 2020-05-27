@@ -64,9 +64,12 @@ function IsNicknameFree($nickname)
   return $response->rowCount() == 0;
 }
 
+//Create new user 
 function CreateNewUser($nickname, $password)
 {
   global $PDO;
+
+  //Put the MD5 to encrypt the password
   $response = $PDO->prepare("INSERT INTO user (nickname, password) values (:nickname , MD5(:password) )");
   $response->execute(
     array(
