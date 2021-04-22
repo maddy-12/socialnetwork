@@ -1,4 +1,5 @@
 <?php
+
 $db_user = "madina";
 $db_passwd = "root";
 $db_host = "localhost";

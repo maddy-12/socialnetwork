@@ -17,7 +17,7 @@
 </head>
 
 <body>
-  <header class="navbar navbar-expand-lg navbar-light bg-light">
+  <header class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="?">
       <img src="img/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
       Tiny Social Network
